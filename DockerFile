@@ -1,0 +1,19 @@
+FROM ubuntu:latest
+
+MAINTAINER Charan sairamcharanbethu18@gmail.com
+
+RUN apt-get update -y && \
+    apt-get install -y python-pip python-dev && \
+    pip install --upgrade pip
+
+COPY . /Lambton-Bot
+
+WORKDIR /Lambton-Bot
+
+RUN pip install -r requirements.txt
+
+EXPOSE 5000
+
+ENTRYPOINT [ "python" ]
+
+CMD ["app.py"]

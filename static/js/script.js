@@ -2,15 +2,11 @@
 /* global document */
 $(document).ready(function() {
 
-	// Credentials
-	var baseUrl = "https://api.api.ai/v1/query?v=20160910&";
-	var accessToken = "1ccdef6772ca4bc59cff24196910966d";
 
-	//---------------------------------- Add dynamic html bot content(Widget style) ----------------------------
-	// You can also add the html content in html page and still it will work!
+	//------- Chabot-----------------------
 	var mybot = '<div class="chatCont" id="chatCont">'+
 								'<div class="bot_profile">'+
-									'<img src="/static/img/logobot.png" class="bot_p_img">'+
+									'<img src="static/img/logobot.png" class="bot_p_img">'+
 									'<div class="close">'+
 										'<i class="fa fa-times" aria-hidden="true"></i>'+
 									'</div>'+
@@ -29,7 +25,7 @@ $(document).ready(function() {
 							'<div class="profile_div">'+
 								'<div class="row">'+
 									'<div class="col-hgt">'+
-										'<img src="/static/img/logobot.png" class="img-circle img-profile">'+
+										'<img src="static/img/logobot.png" class="img-circle img-profile">'+
 									'</div><!--col-hgt end-->'+
 									'<div class="col-hgt">'+
 										'<div class="chat-txt">'+
@@ -66,27 +62,13 @@ $(document).ready(function() {
 		} else {
 			// Random Number Generator
 			var randomNo = Math.floor((Math.random() * 1000) + 1);
-			// get Timestamp
-			var timestamp = Date.now();
-			// get Day
-			var date = new Date();
-			var weekday = new Array(7);
-			weekday[0] = "Sunday";
-			weekday[1] = "Monday";
-			weekday[2] = "Tuesday";
-			weekday[3] = "Wednesday";
-			weekday[4] = "Thursday";
-			weekday[5] = "Friday";
-			weekday[6] = "Saturday";
-			var day = weekday[date.getDay()];
-			// Join random number+day+timestamp
-			var session_id = randomNo+day+timestamp;
+			var session_id = ''+randomNo;
 			// Put the object into storage
 			sessionStorage.setItem('session', session_id);
 			var retrievedSession = sessionStorage.getItem('session');
 		}
 		return retrievedSession;
-	
+
 	}
 
 	// Call Session init
@@ -112,24 +94,19 @@ $(document).ready(function() {
 	});
 
 
-	//------------------------------------------- Send request to API.AI ---------------------------------------
+	//------------------------------------------- Send request to RASA---------------------------------------
 	function send(text) {
-		$.ajax({
-			type: "GET",
-			url: baseUrl+"query="+text+"&lang=en-us&sessionId="+mysession,
-			contentType: "application/json",
-			dataType: "json",
-			headers: {
-				"Authorization": "Bearer " + accessToken
-			},
-			// data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
-			success: function(data) {
-				main(data);
-				// console.log(data);
-			},
-			error: function(e) {
-				console.log (e);
-			}
+		  document.getElementById("chat-input").placeholder = "Type your messages here..."
+    $.post("/chat",
+            {
+                sessionId:mysession,
+                text:text,
+            },
+            function(jsondata, status){
+                if(jsondata["status"]=="success"){
+                    response=jsondata["response"];
+                    if(response){setBotResponse(response);}
+                }
 		});
 	}
 

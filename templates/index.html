@@ -238,17 +238,18 @@
         <form action="{{ url_for('feedback') }}" method="post">
             <div class="row">
                 <div class="col-sm-12 form-group">
+
                     <label>How do you rate your overall experience?</label><br>
                     <label class="radio-container">Good
-                        <input type="radio" checked="checked" name="radio">
+                        <input type="radio" name="options" id="good">
                         <span class="checkmark"></span>
                     </label>
                     <label class="radio-container">Average
-                        <input type="radio" name="radio">
+                        <input type="radio" name="options" id="average">
                         <span class="checkmark"></span>
                     </label>
                     <label class="radio-container">Bad
-                        <input type="radio" name="radio">
+                        <input type="radio" name="options" id="bad">
                         <span class="checkmark"></span>
                     </label>
 
