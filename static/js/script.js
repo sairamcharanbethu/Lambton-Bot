@@ -62,7 +62,21 @@ $(document).ready(function() {
 		} else {
 			// Random Number Generator
 			var randomNo = Math.floor((Math.random() * 1000) + 1);
-			var session_id = ''+randomNo;
+			// get Timestamp
+			var timestamp = Date.now();
+			// get Day
+			var date = new Date();
+			var weekday = new Array(7);
+			weekday[0] = "Sunday";
+			weekday[1] = "Monday";
+			weekday[2] = "Tuesday";
+			weekday[3] = "Wednesday";
+			weekday[4] = "Thursday";
+			weekday[5] = "Friday";
+			weekday[6] = "Saturday";
+			var day = weekday[date.getDay()];
+			// Join random number+day+timestamp
+			var session_id = randomNo+day+timestamp;
 			// Put the object into storage
 			sessionStorage.setItem('session', session_id);
 			var retrievedSession = sessionStorage.getItem('session');
@@ -200,8 +214,7 @@ $(document).ready(function() {
 			scrollToBottomOfResults();
 		}, 1000);
 	}
-
-	// on click of suggestions get value and send to API.AI
+	
 	$(document).on("click", ".suggestion span", function() {
 		var text = this.innerText;
 		setUserResponse(text);

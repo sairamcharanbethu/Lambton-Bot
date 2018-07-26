@@ -6,9 +6,9 @@ RUN apt-get update -y && \
     apt-get install -y python-pip python-dev && \
     pip install --upgrade pip
 
-COPY . /Lambton-Bot
+COPY . /app
 
-WORKDIR /Lambton-Bot
+WORKDIR /app
 
 RUN pip install -r requirements.txt
 
