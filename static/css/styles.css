@@ -591,8 +591,10 @@ Navigation
 ========================================================================== */
 
 nav {
-	background-color: #242830;
+	background-image: url(/static/img/bg.png);
 	margin-top: -1px;
+    background-repeat: repeat;
+    background-size:auto;
 }
 
 nav ul {
