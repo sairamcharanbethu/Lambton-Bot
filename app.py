@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
-import os, datetime, json
+import os, datetime, json,requests
 from wtforms import Form, validators, StringField
-from wtforms.widgets import RadioInput
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
@@ -12,7 +11,6 @@ class Feedback(Form):
     comments = StringField('Comments', validators=[validators.required(), validators.Length(min=1, max=600)])
 
 
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -20,24 +18,26 @@ def index():
 
 
 @app.route('/chat', methods=["GET", "POST"])
+@app.route('/chat', methods=["GET", "POST"])
 def chat():
     """
     chat end point that performs NLU using rasa.ai
     and constructs response from response.py
     """
     user_message = request.form["text"]
-    session = request.form["session"]
+    session_id = request.form["sessionId"]
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     try:
-        print(session)
-        response = request.post('http://35.227.119.207:5000/conversations/'+session+'/respond', json={"query": user_message})
+
+        response = requests.post('http://35.227.119.207:5000/conversations/' + session_id + '/respond',
+                                 json={"query": user_message})
         # response = requests.post('http://localhost:5004/conversations/default/respond', json={"query": user_message})
         response = response.json()
         return jsonify({"status": "success", "response": response[0]["text"]})
     except Exception as e:
         print(e)
-        return jsonify({"status": "success", "response": "Sorry I am not trained to do that yet..."+session})
+        return jsonify({"status": "success", "response": "Sorry I am not trained to do that yet..."})
 
 
 @app.route('/feedback', methods=["POST"])
@@ -54,7 +54,7 @@ def feedback():
     else:
         flash('Error: All the form fields are required. ')
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index', _anchor='feedback'))
 
 
 if __name__ == '__main__':
