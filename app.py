@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, jsonify, flash,redirect,url_for
-import os, requests, datetime, json
-from wtforms import  StringField,RadioField,validators
-from flask_wtf import Form
+from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
+import os, datetime, json
+from wtforms import Form, validators, StringField
+from wtforms.widgets import RadioInput
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+
 
 class Feedback(Form):
     name = StringField('Name:', validators=[validators.required()])
     email = StringField('Email:', validators=[validators.required(), validators.Length(min=2, max=35)])
     comments = StringField('Comments', validators=[validators.required(), validators.Length(min=1, max=600)])
+
 
 
 @app.route('/')
@@ -24,19 +26,18 @@ def chat():
     and constructs response from response.py
     """
     user_message = request.form["text"]
-    session_id = request.form["sessionId"]
+    session = request.form["session"]
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     try:
-
-        response = requests.post('http://35.227.119.207:5000/conversations/' + session_id + '/respond',
-                                 json={"query": user_message})
+        print(session)
+        response = request.post('http://35.227.119.207:5000/conversations/'+session+'/respond', json={"query": user_message})
         # response = requests.post('http://localhost:5004/conversations/default/respond', json={"query": user_message})
         response = response.json()
         return jsonify({"status": "success", "response": response[0]["text"]})
     except Exception as e:
         print(e)
-        return jsonify({"status": "success", "response": "Sorry I am not trained to do that yet..."})
+        return jsonify({"status": "success", "response": "Sorry I am not trained to do that yet..."+session})
 
 
 @app.route('/feedback', methods=["POST"])
@@ -46,7 +47,7 @@ def feedback():
     name = request.form['name']
     email = request.form['email']
     comments = request.form['comments']
-    print(name, " ", email, " ", comments, "Experience: ")
+    print(name, " ", email, " ", comments)
     if form.validate():
         # Save the comment here.
         flash('Thanks for giving feedback ' + name)
