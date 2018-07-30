@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 import os, datetime, json,requests
 from flaskext.mysql import MySQL
-from wtforms import Form, validators, StringField, RadioField
+from wtforms import Form, validators, StringField
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 mysql = MySQL()
@@ -56,9 +56,10 @@ def feedback():
     email = request.form['email']
     comments = request.form['comments']
     radio = request.form['options']
+    conn = mysql.connect()
     if form.validate():
         # Save the comment here.
-        conn = mysql.connect()
+
         cursor = conn.cursor()
         cursor.execute('''INSERT INTO user (name,email,comments,experience) VALUES (%s,%s,%s,%s)''',(name, email, comments, radio))
         conn.commit()
@@ -68,7 +69,6 @@ def feedback():
         flash('Error: All the form fields are required. ')
     conn.close()
     return redirect(url_for('index', _anchor='feedback'))
-
 
 
 if __name__ == '__main__':

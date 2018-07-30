@@ -119,7 +119,9 @@ $(document).ready(function() {
             function(jsondata, status){
                 if(jsondata["status"]=="success"){
                     response=jsondata["response"];
-                    if(response){setBotResponse(response);}
+                    if(response){
+                    	setBotResponse(response);
+                    }
                 }
 		});
 	}
@@ -147,7 +149,7 @@ $(document).ready(function() {
 			// break;
 			default:
 				setBotResponse(speech);
-				if(suggestions) { // check if quick replies are there in api.ai
+				if(suggestions) { //
 					addSuggestion(suggestions);
 				}
 				break;
