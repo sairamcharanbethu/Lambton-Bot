@@ -1,8 +1,17 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 import os, datetime, json,requests
-from wtforms import Form, validators, StringField
+from flaskext.mysql import MySQL
+from wtforms import Form, validators, StringField, RadioField
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+mysql = MySQL()
+
+#MySQL Configuration
+app.config['MYSQL_DATABASE_USER'] = 'feedback'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'feedback'
+app.config['MYSQL_DATABASE_DB'] = 'feedback'
+app.config['MYSQL_DATABASE_HOST'] = '104.155.162.136'
+mysql.init_app(app)
 
 
 class Feedback(Form):
@@ -17,7 +26,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/chat', methods=["GET", "POST"])
 @app.route('/chat', methods=["GET", "POST"])
 def chat():
     """
@@ -40,21 +48,27 @@ def chat():
         return jsonify({"status": "success", "response": "Sorry I am not trained to do that yet..."})
 
 
-@app.route('/feedback', methods=["POST"])
+@app.route('/feedback', methods=["GET", "POST"])
 def feedback():
     form = Feedback(request.form)
     print(form.errors)
     name = request.form['name']
     email = request.form['email']
     comments = request.form['comments']
-    print(name, " ", email, " ", comments)
+    radio = request.form['options']
     if form.validate():
         # Save the comment here.
-        flash('Thanks for giving feedback ' + name)
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.execute('''INSERT INTO user (name,email,comments,experience) VALUES (%s,%s,%s,%s)''',(name, email, comments, radio))
+        conn.commit()
+        cursor.close()
+        flash('Thanks for giving feedback ' + name, '!')
     else:
         flash('Error: All the form fields are required. ')
-
+    conn.close()
     return redirect(url_for('index', _anchor='feedback'))
+
 
 
 if __name__ == '__main__':
