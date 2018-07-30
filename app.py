@@ -59,7 +59,6 @@ def feedback():
     conn = mysql.connect()
     if form.validate():
         # Save the comment here.
-
         cursor = conn.cursor()
         cursor.execute('''INSERT INTO user (name,email,comments,experience) VALUES (%s,%s,%s,%s)''',(name, email, comments, radio))
         conn.commit()
