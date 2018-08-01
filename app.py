@@ -38,7 +38,7 @@ def chat():
 
     try:
 
-        response = requests.post('http://35.227.119.207:5000/conversations/' + session_id + '/respond',
+        response = requests.post('http://35.231.191.254:5000/conversations/' + session_id + '/respond',
                                  json={"query": user_message})
         # response = requests.post('http://localhost:5004/conversations/default/respond', json={"query": user_message})
         response = response.json()

@@ -95,12 +95,16 @@ $(document).ready(function() {
 		var text = $("#chat-input").val();
 		if (keyCode === 13) {
 			if(text == "" ||  $.trim(text) == '') {
+			    $('#chat-input').select();
 				e.preventDefault();
 				return false;
 			} else {
 				$("#chat-input").blur();
+				textboxes = $("#chat-input");
 				setUserResponse(text);
 				send(text);
+				textboxes.focus();
+				textboxes.select();
 				e.preventDefault();
 				return false;
 			}
