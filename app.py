@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 mysql = MySQL()
 
-#MySQL Configuration
+# MySQL Configuration
 app.config['MYSQL_DATABASE_USER'] = 'feedback'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'feedback'
 app.config['MYSQL_DATABASE_DB'] = 'feedback'
@@ -15,9 +15,9 @@ mysql.init_app(app)
 
 
 class Feedback(Form):
-    name = StringField('Name:', validators=[validators.required()])
-    email = StringField('Email:', validators=[validators.required(), validators.Length(min=2, max=35)])
-    comments = StringField('Comments', validators=[validators.required(), validators.Length(min=1, max=600)])
+    name = StringField('Name:', validators=[validators.DataRequired()])
+    email = StringField('Email:', validators=[validators.DataRequired(), validators.Length(min=2, max=35),validators.Email()])
+    comments = StringField('Comments', validators=[validators.DataRequired(), validators.Length(min=1, max=600)])
 
 
 @app.route('/')
@@ -34,11 +34,9 @@ def chat():
     """
     user_message = request.form["text"]
     session_id = request.form["sessionId"]
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
     try:
 
-        response = requests.post('http://35.231.191.254:5000/conversations/' + session_id + '/respond',
+        response = requests.post('http://35.211.139.242:5000/conversations/' + session_id + '/respond',
                                  json={"query": user_message})
         # response = requests.post('http://localhost:5004/conversations/default/respond', json={"query": user_message})
         response = response.json()
@@ -51,7 +49,6 @@ def chat():
 @app.route('/feedback', methods=["GET", "POST"])
 def feedback():
     form = Feedback(request.form)
-    print(form.errors)
     name = request.form['name']
     email = request.form['email']
     comments = request.form['comments']
@@ -60,12 +57,12 @@ def feedback():
     if form.validate():
         # Save the comment here.
         cursor = conn.cursor()
-        cursor.execute('''INSERT INTO user (name,email,comments,experience) VALUES (%s,%s,%s,%s)''',(name, email, comments, radio))
+        cursor.execute('''INSERT INTO user (name,email,comments,experience) VALUES (%s,%s,%s,%s)''', (name, email, comments, radio))
         conn.commit()
         cursor.close()
         flash('Thanks for giving feedback ' + name, '!')
     else:
-        flash('Error: All the form fields are required. ')
+        flash('Error: All the form fields are required.')
     conn.close()
     return redirect(url_for('index', _anchor='feedback'))
 

@@ -143,8 +143,8 @@ $(window).load(function() {
 		animation: "slide",
 		directionNav: false,
 		controlNav: true,
-		touch: true,
-		pauseOnHover: true,
+		touch: false,
+		pauseOnHover: false,
 		start: function() {
 			$.waypoints('refresh');
 		}

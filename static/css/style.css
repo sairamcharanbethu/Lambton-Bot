@@ -24,7 +24,7 @@ mybot .chatCont {
   right: 0;
   background: #efe7dd url(../img/bg.png) repeat;
   border-top-left-radius: 20px;
-  border-top-right-radius: 5px; 
+  border-top-right-radius: 5px;
   z-index: 900;
 display: none;
 }
@@ -51,7 +51,7 @@ mybot .bot_profile {
 mybot .bot_p_img {
   border-radius: 87%;
   width: 70px;
-  border-radius: 84%; 
+  border-radius: 84%;
   background-color: white;
   box-shadow: 0 0px 1px 0 rgba(0,0,0,0.16), 0 0px 10px 0 rgba(0,0,0,0.12);
 }
@@ -59,7 +59,7 @@ mybot .bot_p_img {
 mybot .chatForm {
   position: absolute;
   bottom: -85px;
-	right: 18px;
+	right: 19px;
 	margin-bottom: 0px;
 	width: 400px;
   display: none;
@@ -154,7 +154,6 @@ mybot .img-profile {
 
 mybot .col-hgt {
   height: 90px;
-    background-color: none;
   display: flex;
   align-items: center;
   float: left;
@@ -167,7 +166,7 @@ mybot .chat-txt {
   padding: 15px 15px;
   background-color: azure;
   border-radius: 50px;
-   
+
 }
 
 mybot .chat-txt:hover{
@@ -201,7 +200,7 @@ mybot .spinner {
 
 mybot .spinner:before {
   content: "";
-    color: black;
+    color: white;
   position: absolute;
   width: 0;
   height: 0;
@@ -220,7 +219,7 @@ mybot .spinner > div {
   display: inline-block;
   -webkit-animation: sk-bouncedelay 1.5s infinite ease-in-out both;
   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  margin-right: 5px;    
+  margin-right: 5px;
 }
 
 mybot .spinner .bounce1 {
