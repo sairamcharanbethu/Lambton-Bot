@@ -5,6 +5,17 @@
 	.wp2, .wp4, .wp5, .light-box { margin-bottom: 30px; }
 	.legals { text-align: center; margin: 0; padding: 0; }
 	.credit { text-align: center; }
+    .hero-logo {
+    max-height: 90%;
+  max-width: 90%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 2px solid rgb(44,44,44);
+ }
 }
 /* 480px (WVGA - Low End Windows Phone) */
 @media screen and (max-width:480px) {
@@ -13,12 +24,18 @@
 	.wp2, .wp4, .wp5, .light-box { margin-bottom: 30px; }
 	.legals { text-align: center; margin: 0; padding: 0; }
 	.credit { text-align: center; }
+       .hero-logo {
+    display:block; margin: 10px auto;
+ }
 }
 /* xGA iPad */
 @media screen and (max-width:1024px) {
 	.wp3 { background-position: 50px 0; }
 	.swag { background-attachment: scroll; }
 	.subscribe { background-attachment: scroll; }
+       .hero-logo {
+    display:block; margin: 10px auto;
+ }
 }
 /* 1200px (Small Desktop, Netbook) */
 @media screen and (max-width:1280px) {
@@ -32,4 +49,7 @@
 	.wp2, .wp4, .wp5, .light-box { margin-bottom: 30px; }
 	.legals { text-align: center; margin: 0; padding: 0; }
 	.credit { text-align: center; }
+       .hero-logo {
+    display:block; margin: 10px auto;
+ }
 }

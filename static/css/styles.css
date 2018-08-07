@@ -772,6 +772,7 @@ Hero
         background-size: cover;
         padding: 65px 0 300px 0;
         height: auto;
+        width: auto;
     }
 
     .hero h1 {
@@ -1332,4 +1333,40 @@ Waypoints
 .delay-1s {
 	animation-delay: 1s;
 	-webkit-animation-delay: 1s;
+}
+
+@media only screen and (max-width: 960px) {
+  .container {
+      width: auto;
+  }
+
+    .hero h1 {
+        font-size: 40px;
+        letter-spacing: 4px;
+        margin: 10px;
+        color: #024B7E;
+        width: 100%;
+        text-wrap: avoid;
+        text-align: right;
+        position: relative;
+        top: 10px;
+        font-weight: 800;
+    }
+       .hero h1 span {
+        font-weight: 400;
+        color: #00ABE2;
+        display: inline-block;
+    }
+
+    .hero p {
+        letter-spacing: 2px;
+        color: white;
+        text-align: right;
+        width: 100%;
+        right: 100px;
+        font-weight: 400;
+        position: relative;
+    }
+
+
 }
