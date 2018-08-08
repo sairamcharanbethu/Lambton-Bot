@@ -43,7 +43,7 @@ $(document).ready(function() {
 		$('.chatCont').toggle();
 		$('.bot_profile').toggle();
 		$('.chatForm').toggle();
-		setBotResponse("Welcome to Lambton Chatbot")
+		setBotResponse("Welcome to Lambton Chatbot, my name is Jessie. How can I help you?")
 		document.getElementById('chat-input').focus();
 	});
 

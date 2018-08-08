@@ -38,8 +38,16 @@ def chat():
 
         response = requests.post('http://35.211.139.242:5000/conversations/' + session_id + '/respond',
                                  json={"query": user_message})
+        conn = mysql.connect()
         # response = requests.post('http://localhost:5004/conversations/default/respond', json={"query": user_message})
         response = response.json()
+        bot = response[0]["text"]
+        cursor = conn.cursor()
+        cursor.execute('''INSERT INTO responses (user,bot) VALUES (%s,%s)''',
+                       (user_message, bot))
+        conn.commit()
+        cursor.close()
+
         return jsonify({"status": "success", "response": response[0]["text"]})
     except Exception as e:
         print(e)
