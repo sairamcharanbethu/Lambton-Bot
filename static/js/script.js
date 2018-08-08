@@ -1,9 +1,5 @@
-/*global $*/
-/* global document */
 $(document).ready(function() {
-
-
-	//------- Chabot-----------------------
+	// ------- Chat Bot----------------------- //
 	var mybot = '<div class="chatCont" id="chatCont">'+
 								'<div class="bot_profile">'+
 									'<img src="static/img/logobot.png" class="bot_p_img">'+
@@ -56,7 +52,7 @@ $(document).ready(function() {
 	});
 
 
-	// Session Init (is important so that each user interaction is unique)--------------------------------------
+	// Session to make each interaction with chat bot unique
 	var session = function() {
 		// Retrieve the object from storage
 		if(sessionStorage.getItem('session')) {
@@ -80,7 +76,7 @@ $(document).ready(function() {
 	var mysession = session();
 
 
-	// on input/text enter--------------------------------------------------------------------------------------
+	// --- Getting the text --- //
 	$('#chat-input').on('keyup keypress', function(e) {
 		var keyCode = e.keyCode || e.which;
 		var text = $("#chat-input").val();
@@ -103,7 +99,7 @@ $(document).ready(function() {
 	});
 
 
-	//------------------------------------------- Send request to RASA---------------------------------------
+	//------------------------------------------- Send request to RASA ---------------------------------------
 	function send(text) {
 		  document.getElementById("chat-input").placeholder = "Type your messages here..."
     $.post("/chat",
@@ -120,37 +116,6 @@ $(document).ready(function() {
                 }
 		});
 	}
-
-
-	//------------------------------------------- Main function ------------------------------------------------
-	function main(data) {
-		var action = data.result.action;
-		var speech = data.result.fulfillment.speech;
-		// use incomplete if u use required in api.ai questions in intent
-		// check if actionIncomplete = false
-		var incomplete = data.result.actionIncomplete;
-		if(data.result.fulfillment.messages) { // check if messages are there
-			if(data.result.fulfillment.messages.length > 0) { //check if quick replies are there
-				var suggestions = data.result.fulfillment.messages[1];
-			}
-		}
-		switch(action) {
-			// case 'your.action': // set in api.ai
-			// Perform operation/json api call based on action
-			// Also check if (incomplete = false) if there are many required parameters in an intent
-			// if(suggestions) { // check if quick replies are there in api.ai
-			//   addSuggestion(suggestions);
-			// }
-			// break;
-			default:
-				setBotResponse(speech);
-				if(suggestions) { //
-					addSuggestion(suggestions);
-				}
-				break;
-		}
-	}
-
 
 	//------------------------------------ Set bot response in result_div -------------------------------------
 	function setBotResponse(val) {
@@ -188,7 +153,7 @@ $(document).ready(function() {
 	}
 
 
-	//---------------------------------------- Ascii Spinner ---------------------------------------------------
+	//---------------------------------------- Spinner ---------------------------------------------------
 	function showSpinner() {
 		$('.spinner').show();
 	}
@@ -197,26 +162,4 @@ $(document).ready(function() {
 	}
 
 
-	//------------------------------------------- Suggestions --------------------------------------------------
-	function addSuggestion(textToAdd) {
-		setTimeout(function() {
-			var suggestions = textToAdd.replies;
-			var suggLength = textToAdd.replies.length;
-			$('<p class="suggestion"></p>').appendTo('#result_div');
-			$('<div class="sugg-title">Suggestions: </div>').appendTo('.suggestion');
-			// Loop through suggestions
-			for(i=0;i<suggLength;i++) {
-				$('<span class="sugg-options">'+suggestions[i]+'</span>').appendTo('.suggestion');
-			}
-			scrollToBottomOfResults();
-		}, 1000);
-	}
-	
-	$(document).on("click", ".suggestion span", function() {
-		var text = this.innerText;
-		setUserResponse(text);
-		send(text);
-		$('.suggestion').remove();
 	});
-	// Suggestions end -----------------------------------------------------------------------------------------
-});

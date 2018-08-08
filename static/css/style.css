@@ -1,7 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800|Satisfy);
-
-
-
 /* MyBot */
 mybot.center .chatCont,
 mybot.center .profile_div {
@@ -307,6 +304,7 @@ mybot .suggestion span:last-child {
   padding: 35px 20px 30px 20px;
   overflow-y: auto;
   height: 100%;
+    overflow-x: auto;
 }
 
 ::-webkit-scrollbar{
