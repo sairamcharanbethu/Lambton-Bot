@@ -42,6 +42,8 @@ python app.py
 ### Deployment
 * You can deploy this project into Google or any other cloud services of your wish.
 
+#### Docker
+* This repository includes ``Docker File`` you can use it, to deploy this project using Docker.
 
 
 
