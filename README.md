@@ -1,4 +1,5 @@
-# :school: Chat Bot :heart_eyes:  ## [Jessi- ### A Lambton Chatbot](https://chatbot-lambton.appspot.com/) :point_left:
+# :school: Chat Bot :heart_eyes:
+##[Jessi-A Lambton Chatbot](https://chatbot-lambton.appspot.com/) :point_left:
 Jessi - A chatbot for Lambton College, Toronto.
 
 ## Getting Started
